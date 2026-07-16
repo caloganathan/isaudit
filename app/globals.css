@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   JCSS Indonesia — brand tokens & theme system
+   JCSS Orange #E9531E · JCSS Grey #6E6F72
+   Dark (default): deep ink editorial. Light: corporate white, on-brand match
+   to jcss.co.id. Theme is switched via `data-theme` on <html>.
+--------------------------------------------------------------------------- */
+
+:root {
+  --jcss-orange: #e9531e;
+  --jcss-orange-soft: #f0855c;
+  --jcss-orange-dim: rgba(233, 83, 30, 0.14);
+  --jcss-grey: #6e6f72;
+  --jcss-grey-soft: #9a9ba0;
+
+  /* dark theme (default) */
+  --bg: #0a0e14;
+  --bg-soft: #0e131c;
+  --surface: #121826;
+  --surface-raised: #171f30;
+  --line: rgba(244, 241, 236, 0.09);
+  --line-strong: rgba(244, 241, 236, 0.18);
+  --ink: #f4f1ec;
+  --ink-muted: #a8abb3;
+  --ink-faint: #6e6f72;
+  --ghost: rgba(244, 241, 236, 0.035);
+  --scrim: rgba(10, 14, 20, 0.86);
+  --heat-low: rgba(233, 83, 30, 0.12);
+  --heat-mid: rgba(233, 83, 30, 0.32);
+  --heat-high: rgba(233, 83, 30, 0.62);
+}
+
+html[data-theme="light"] {
+  --bg: #fbfaf8;
+  --bg-soft: #f4f2ee;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --line: rgba(26, 34, 48, 0.1);
+  --line-strong: rgba(26, 34, 48, 0.22);
+  --ink: #1a2230;
+  --ink-muted: #565d68;
+  --ink-faint: #6e6f72;
+  --ghost: rgba(26, 34, 48, 0.04);
+  --scrim: rgba(251, 250, 248, 0.92);
+  --heat-low: rgba(233, 83, 30, 0.1);
+  --heat-mid: rgba(233, 83, 30, 0.28);
+  --heat-high: rgba(233, 83, 30, 0.55);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-ghost: var(--ghost);
+  --color-scrim: var(--scrim);
+  --color-orange: var(--jcss-orange);
+  --color-orange-soft: var(--jcss-orange-soft);
+  --color-orange-dim: var(--jcss-orange-dim);
+  --color-grey: var(--jcss-grey);
+  --color-grey-soft: var(--jcss-grey-soft);
+  --font-serif: var(--font-fraunces), "Georgia", serif;
+  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
+
+::selection {
+  background: var(--jcss-orange);
+  color: #fff;
+}
+
+/* Deck scroll container: full-screen snap on desktop, relaxed on small
+   screens so mobile reads as a smooth scrolling document. */
+.deck-scroll {
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.deck-scroll::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 767px) {
+  .deck-scroll {
+    scroll-snap-type: y proximity;
+  }
+}
+
+.slide-panel {
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (max-width: 767px) {
+  .slide-panel {
+    min-height: 100svh;
+    padding-top: 5.5rem;
+    padding-bottom: 3rem;
+  }
+}
+
+/* Ghosted divider numerals */
+.ghost-numeral {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Fine hairline used in diagrams */
+.hairline {
+  border-color: var(--line);
+}
+
+/* Reduced motion: kill smooth scrolling & long transitions */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  .deck-scroll {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
